@@ -1,0 +1,21 @@
+<ion-list *ngFor="let item of data; let i = index" lines="none" class="ion-no-padding">
+  <div [ngClass]="item.children.length > 0 ? 'classic-node' : 'child-node'" class="item-content">
+    <ion-checkbox checked="{{ item.checked }}" (ionChange)="checkItem(item, $event)" [style.marginRight]="'20px'"></ion-checkbox>
+    <div tappable (click)="toggle(item, $event)" class="sub-item">
+      {{ item.parent }} <span *ngIf="item.children.length <= 0">({{ item.count }})</span>
+      <ion-label *ngIf="item.children.length <= 0"><i>&nbsp;(leaf)</i></ion-label>
+      <ion-icon class="icon" name="chevron-forward" slot="end" *ngIf="!item.toggle && item.children.length > 0"></ion-icon>
+      <ion-icon class="icon" name="chevron-up" slot="end" *ngIf="item.toggle && item.children.length > 0"></ion-icon>  
+    </div>
+  </div>
+  <!-- <ion-item tappable (click)="toggle(item, $event)" [ngClass]="item.children.length > 0 ? 'classic-node' : 'child-node'">
+    <ion-checkbox (ionChange)="checkItem($event)" [style.marginRight]="'20px'"></ion-checkbox>
+    {{ item.parent }}
+    <ion-label *ngIf="item.children.length <= 0"><i>&nbsp;(no child)</i></ion-label>
+    <ion-icon class="icon" name="chevron-forward" slot="end" *ngIf="!item.toggle && item.children.length > 0"></ion-icon>
+    <ion-icon class="icon" name="chevron-down" slot="end" *ngIf="item.toggle && item.children.length > 0"></ion-icon>
+  </ion-item> -->
+  <div class="child-div" *ngIf="item.toggle && item.children.length > 0">
+    <app-node [data]="item.children"></app-node>
+  </div>
+</ion-list>
