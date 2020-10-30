@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class AccordionService {
 
   nodeArray: ITempNode[] = [];
-  finalArray = [];
+  finalArray: INode[] = [];
   constructor(private tools: ToolsService) { }
 
   /**
@@ -16,7 +16,7 @@ export class AccordionService {
    * @param myArray 
    */
   mainStep(myArray: any[]) {
-    myArray.forEach(row => {
+    myArray.forEach((row: IRow) => {
       this.stepOne(row);
     });
     this.nodeArray.sort(this.tools.predicateBy('parent'));  // trier le tableau par path
@@ -57,8 +57,8 @@ export class AccordionService {
    * Tester si le couple {parent; leaf} existe déjà dans le tableau intermédiaire
    * @param node 
    */
-  nodeExists(node: any): boolean {
-    const index = this.nodeArray.find((elt) => elt.parent === node.parent && elt.leaf === node.leaf);
+  nodeExists(node: ITempNode): boolean {
+    const index = this.nodeArray.find((elt: ITempNode) => elt.parent === node.parent && elt.leaf === node.leaf);
     return index ? true : false;
   }
 
@@ -68,7 +68,7 @@ export class AccordionService {
    */
   stepTwo(): any[] {
     // générer les racines avec des enfants vides
-    const root = this.nodeArray.filter(elt => elt.parent === 'root'); // chercher les noeuds 'root'
+    const root = this.nodeArray.filter((elt: ITempNode) => elt.parent === 'root'); // chercher les noeuds 'root'
     root.forEach((r: ITempNode) => {
       // créer les noeuds racines
       const rootNode: INode = {parent: r.leaf, toggle: false, checked: false, count: r.count, children: []};
