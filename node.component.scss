@@ -1,0 +1,28 @@
+
+.child-div {
+    border-bottom: 1px solid #a4a4a4;
+}
+.icon {
+    color: black !important;
+    --color: black !important;
+    position: absolute;
+    right: 10px;
+}
+.item-content {
+    height: 50px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.sub-item {
+    width: 100%;
+}
+.classic-node {
+    background-color: #f4f4f4;
+    --background: #f4f4f4;
+}
+.child-node {
+    background-color: white;
+    --background: white;
+}
