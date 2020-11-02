@@ -1,0 +1,83 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TreeService {
+
+  constructor() { }
+
+  findKeyObjChild = (keyObj, keyObjChildName) =>
+  {
+    for (let keyObjChild of keyObj)
+    {
+      if (keyObjChild.key && keyObjChild.key === keyObjChildName){
+        return keyObjChild;
+      }
+    }
+    return null;
+  }
+
+  generateTree(data) {
+    
+    /*let filters= {
+        outcome: [
+            {label: 'niv1|niv2|niv3|aaa', count: 1},
+            {label: 'niv2|niv1|niv2|niv3|aaa', count: 1},
+            {label: 'niv1|niv2|niv3|bbb', count: 1},
+            {label: 'niv1|niv2|ccc', count: 1},
+            {label: 'niv1|ddd', count: 1},
+            {label: 'niv1|fff', count: 1},
+            {label: 'eee', count: 1},
+            {label: 'niv4|ggg', count: 1},
+        ],
+        disease: [
+            {label: 'niv1|niv2|niv3|aaa', count: 1},
+            {label: 'niv1|niv2|niv3|bbb', count: 1},
+            {label: 'niv1|niv2|ccc', count: 1},
+        ]};*/
+
+    let dic = {};
+
+    for(let filter in data) {
+      if (!dic[filter]) {
+        dic[filter] = [];
+      }
+
+      let filterCollection = data[filter];
+
+      for (let filterItem of filterCollection)
+      {
+        let dicFilter = dic[filter];
+        for (let filterPathPart of filterItem.label.split('|')) {
+          let children = dicFilter.children;
+
+          if (!children) { children = dicFilter; }
+
+          let tmpDicFilter = this.findKeyObjChild(children, filterPathPart);
+
+          if (tmpDicFilter === null) {
+            tmpDicFilter = {
+            key: filterPathPart,
+            count: 0,
+            checked: false,
+            toggle: false,
+            children: []
+          };
+
+            if (dicFilter.children) {
+              dicFilter.children.push(tmpDicFilter);
+            }
+            else {
+              dicFilter.push(tmpDicFilter);
+            }
+          }
+          tmpDicFilter.count += filterItem.count;
+          dicFilter = tmpDicFilter;
+        }
+      }
+    }
+    //});
+    return dic;
+  }
+}
