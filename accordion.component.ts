@@ -14,10 +14,16 @@ export class AccordionComponent implements OnInit {
   mockdata: any = MockCleanData;
   finaldata: any;
   
-  constructor(private accordionService: AccordionService, private test: SolutionService) { }
+  constructor(private accordionService: AccordionService,
+              private tree: TreeService) { }
 
   ngOnInit() {
+    // FIRST METHOD : accordionService
     //this.finaldata = this.accordionService.mainStep(MockSimple.out);
     this.finaldata = this.accordionService.mainStep(MockProd.out);
+    
+    // SECOND METHOD : treeService 
+    const dicData = this.tree.generateTree(MockProd);
+    this.finaldata = dicData['out'];
   }
 }
